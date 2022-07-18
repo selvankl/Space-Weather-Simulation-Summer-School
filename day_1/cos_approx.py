@@ -3,17 +3,20 @@
 
 cosine approximation function
 """
-__author__ = 'Qusai Al Shidi'
-__email__ = 'qusai@umich.edu'
+__author__ = 'Selvaraj'
+__email__ = 'selvankl@ymail.com'
 
 from math import factorial
 from math import pi
 
 
-def cos_approx(x, accuracy=10):
+def cos_approx(x, accuracy=20):
     """
+    Cosine of x is approximated by Tylor expansion
     """
-    return 
+    cosxV = sum([(((-1)**ij)/(factorial(2*ij))) * (x**(2*ij)) for ij in range(accuracy)])
+        #print(cosxV)
+    return cosxV
 
 
 
