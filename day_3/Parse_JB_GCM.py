@@ -23,11 +23,14 @@ locale.getpreferredencoding(False)
 
 def parse_args():
     parser = argparse.ArgumentParser(description = 'Compare the densities of JB2008 and TIE-GCM')
+    parser.add_argument('rdir', \
+                        help = 'directory including Input file name - need three input but (-out) output file name is optional!', \
+                            type=str)
     parser.add_argument('JB_dir', \
-                        help = 'directory including Input file name - need two input but (-out) output file name is optional!', \
+                        help = 'directory including Input file name - need three input but (-out) output file name is optional!', \
                             type=str)
     parser.add_argument('tiegcm_dir',  \
-                            help = 'directory including Input file name - need two input but (-out) output file name is optional!', \
+                            help = 'directory including Input file name - need three input but (-out) output file name is optional!', \
                                 type=str)
     parser.add_argument('-alt', \
                        help = 'another scalar (default = -1)', \
@@ -55,8 +58,9 @@ if __name__ == '__main__':  # main code block
     
     #data_dic = Omni_data_read(args.infle[0], args.index);
         
-    dir_density_Jb2008 = args.JB_dir;
+    dir_density_Jb2008 = args.rdir+args.JB_dir;
     time_index = args.Tid;
+    rdir = args.rdir;
     
     # Import required packages
     
@@ -106,8 +110,8 @@ if __name__ == '__main__':  # main code block
     print(hi)
     print(time_array_JB2008[0])
     # Create a canves to plot our data on.
-    fig, axs = plt.subplots(20, figsize=(9, 18), sharex=True)
-    for ik in range(20):
+    fig, axs = plt.subplots(5, figsize=(9, 18), sharex=True)
+    for ik in range(5):
         cs = axs[ik].contourf(localSolarTimes_JB2008, latitudes_JB2008, JB2008_dens_reshaped[:,:,hi,time_array_JB2008[ik]].squeeze().T)
         axs[ik].set_title('JB2008 density at 400 km, t = {} hours'.format(time_array_JB2008[ik]), fontsize=12)
         axs[ik].set_ylabel("Latitudes", fontsize=18)
@@ -118,7 +122,8 @@ if __name__ == '__main__':  # main code block
         cbar.ax.set_ylabel('Density')
     
     axs[ik].set_xlabel('Local Solar Time', fontsize=18)
-    
+    print('Saving the plot to:'+rdir+'Density_JB');
+    plt.savefig(rdir+'Density_JB.png');
     
     #%%
     """
@@ -151,6 +156,9 @@ if __name__ == '__main__':  # main code block
     axs.set_xlabel("Density", fontsize=18)
     axs.set_ylabel("Altitude (km)", fontsize=18)
     plt.legend()
+    print('Saving the plot to:'+rdir+'Density_Prof_JB');
+    plt.savefig(rdir+'Density_Prof_JB.png');
+    
     #%%
     """
     Data Visualization II
@@ -160,7 +168,7 @@ if __name__ == '__main__':  # main code block
     # Import required packages
     
     #tiegcm_dir = '/Volumes/Data/Coding/SpaceWeather/CU2022/TIEGCM/2002_TIEGCM_density.mat'
-    Ldat = h5py.File(args.tiegcm_dir);
+    Ldat = h5py.File(args.rdir+args.tiegcm_dir);
     #This is a hdf5 data object, some similarity with a dictionary
     print('Key within dataset:', list(Ldat.keys()))
     
@@ -201,6 +209,8 @@ if __name__ == '__main__':  # main code block
         cbar.ax.set_ylabel('Density')
     
     axs[ik].set_xlabel('Local Solar Time', fontsize=18)
+    print('Saving the plot to:'+rdir+'Density_GCM');
+    plt.savefig(rdir+'Density_GCM.png');
     
     #%%
     """
@@ -231,6 +241,9 @@ if __name__ == '__main__':  # main code block
     axs.set_xlabel("Density", fontsize=18)
     axs.set_ylabel("Altitude (km)", fontsize=18)
     plt.legend()
+    print('Saving the plot to:'+rdir+'Comparison_density_Prof_JB_GCM');
+    plt.savefig(rdir+'Comparison_density_Prof_JB_GCM.png');
+    
     #%%
     
     #%%
@@ -317,7 +330,6 @@ if __name__ == '__main__':  # main code block
     
     #VdenGCM = Den_3D_GCM(lat3d, tme3d, alt3d)
     #VdenJB = Den_3D_JB(lat3d, tme3d, alt3d)
-    
     # Create a canves to plot our data on.
     fig, axs = plt.subplots(2, figsize=(9, 18), sharex=True)
     ik=0
@@ -338,11 +350,11 @@ if __name__ == '__main__':  # main code block
     cbar = fig.colorbar(cs, ax=axs[ik])
     cbar.ax.set_ylabel('Density')
     axs[ik].set_xlabel('Local Solar Time', fontsize=18)
-    print('Saving the plot of omni-SymH to:'+rdir[:-33]+args.out);
-    #plt.savefig(args.infle[0][:-33]+args.out);
+    print('Saving the plot to:'+rdir+'3d_interpolated_JB_GCM');
+    plt.savefig(rdir+'3d_interpolated_JB_GCM.png');
     
     
-    print('TIE-GCM density at (lst=20hrs, lat=12 deg and alt = 400 km)', interp_fun1gcm((20,12,alt)) )
+    print('TIE-GCM density at (lst=20hrs, lat=12 deg and alt = 400 km)', interp_fun1gcm((20,12,args.alt)) )
 
 
 #%%
