@@ -16,15 +16,17 @@ import argparse
 
 def parse_args():
     """
-    Plotting the TEC by reading  the netCDF file
-    Needs two input, one is directory and the second is filename
+    Plotting the TEC by reading  the netCDF files
+    Primarly Needs two types of inputs, one is directory and the second is filename(s)
+    The filenames can be placed with one space gap in series
     plot of TEC is saved in the same directory of the data
     """
     parser = argparse.ArgumentParser(description = 'Plotting the TEC by reading netCDF file')
-    parser.add_argument('rdir', \
+    
+    parser.add_argument('rdir',  \
                         help = 'directory ', \
                             type=str)
-    parser.add_argument('nc_file', \
+    parser.add_argument('nc_file', nargs='+',\
                         help = 'Input file name ', \
                             type=str)
     args = parser.parse_args()
@@ -71,17 +73,19 @@ def plot_TEC(dataset, fln, vmn=0, vmx=100, figsize=(12, 9)):
 
 # Will only run if this is run from command line as opposed to imported
 if __name__ == '__main__':  # main code block
-    
+    """
+    To access the multiple files, for loop is used here
+    """
     args = parse_args()
-    print(args.rdir)
-    print(args.nc_file)
+    print('\n The Data Directory: '+args.rdir+'\n')
+    print('\n No. of files are given to process: '+str(len(args.nc_file))+'\n')
+    for nfi in range(len(args.nc_file)):
+        dat = nc.Dataset(args.rdir+'/'+args.nc_file[nfi]) # reading netCDF file into dat
+        print(dat) #print the data
     
-    dat = nc.Dataset(args.rdir+'/'+args.nc_file) # reading netCDF file into dat
-    print(dat) #print the data
-
-    # plot_TEC function takes four necessary inputs (x-longitude, y-latitude, z-TEC, filename for the title) with three optional (figsize)
-    fig, axs = plot_TEC(dat, args.nc_file, 0, 100)
-    print('Saving the plot to:'+args.rdir+'TEC_'+args.nc_file[-18:-10])
-    #plt.savefig(rdir+'TEC_'+fln[-18:-10]+'.png')
-    plt.savefig(args.rdir+'/'+args.nc_file+'.png')
+        # plot_TEC function takes four necessary inputs (x-longitude, y-latitude, z-TEC, filename for the title) with three optional (figsize)
+        fig, axs = plot_TEC(dat, args.nc_file[nfi], 0, 100)
+        print('Saving the plot to:'+args.rdir+'TEC_'+args.nc_file[nfi][-18:-10])
+        #plt.savefig(rdir+'TEC_'+fln[-18:-10]+'.png')
+        plt.savefig(args.rdir+'/'+args.nc_file[nfi]+'.png')
 
