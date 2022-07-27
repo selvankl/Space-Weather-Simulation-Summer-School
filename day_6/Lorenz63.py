@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+<<<<<<< HEAD
 Created on Thu Jul 21 11:53:19 2022
 
 @author: Simone Servadio
@@ -100,3 +101,47 @@ sys.exit()
 
 
 
+=======
+Created on Mon Jul 25 16:18:04 2022
+
+@author: selva
+"""
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+def Lorenz63(xx, t, sig, rho, beta ):
+    """
+    Lorenz63 system for atmospheric convection
+    """
+    derX = np.zeros(3)
+    derX[0] = sig*(xx[1]-xx[0])
+    derX[1] = xx[0] * (rho-xx[2]) - xx[1]
+    derX[2] = xx[0]*xx[1] - beta*xx[2]
+
+    return derX
+
+sig = 10
+rho = 28
+beta = 8/3
+t0 = 0 #initial time
+tf = 20 #final time
+t = np.linspace(t0, tf,  1000)
+x1 = np.linspace(-20, 20, 20)
+y1 = np.linspace(-30, 30, 20)
+z1 = np.linspace(0, 50, 20)
+#xx = np.array([5,5,5])
+#Y_free = odeint(Lorenz63, xx, t, args=(sig, rho, beta ));
+
+from mpl_toolkits.mplot3d import Axes3D
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+xx = np.array([x1,y1,z1])
+Y_free = np.zeros((len(t), 3, len(z1)))
+for ri in range(len(z1)):
+    Y_free[:, :, ri] = odeint(Lorenz63, xx[:,ri], t, args=(sig, rho, beta ));
+    ax.plot3D(Y_free[:,0, ri], Y_free[:,1, ri], Y_free[:,2, ri])
+>>>>>>> e23347c (Lorenz63 model)
