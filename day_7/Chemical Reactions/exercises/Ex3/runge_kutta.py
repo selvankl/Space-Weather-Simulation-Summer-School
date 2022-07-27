@@ -57,7 +57,12 @@ def integrate(f, x0, tspan, h, step):
         ts.append(t)
     return trajectory, ts
 
+<<<<<<< HEAD
 def adaptive_explicit_RK_stepper(f,x,t,h,a,b,c,b_control):
+=======
+def adaptive_explicit_RK_stepper(x,t,f,h,a,b,c,b_control):
+    
+>>>>>>> 31a4548 (merge)
     """
         Implementation of generic explicit Runge-Kutta update for explicit ODEs
         
@@ -106,6 +111,7 @@ def adaptive_integrate(f, x0, tspan, h, step, rtol = 1e-8, atol = 1e-8):
             ts - time points visited during integration (list)
             xs - trajectory of the system (list of numpy arrays)
     """
+    
     return ... # please complete this function 
                # Hint 1: The slide contain pseudo code that should be a good 
                #         starting ground!

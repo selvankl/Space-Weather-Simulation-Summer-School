@@ -13,6 +13,10 @@ import runge_kutta as rk
 #    c_0 - initial composition, i.e., c_0(A) = 1, c_0(B)=c_0(C)=0.0
 
 def reaction_rates(c,k):
+    RatR = []
+    for i in range(len(k)):
+        RatR.append( k[i]*np.prod([c[j]**V_[j,i] for j in range(len(c))]) )
+        
     """
         Function implementing the reaction rate computation of our toy reactor
         
@@ -23,7 +27,8 @@ def reaction_rates(c,k):
         outputs:
             reaction rates (numpy array)
     """
-    return ... # please complete this function
+    return np.array(RatR) # please complete this function
+
 
 def reactor(c,t,k,S):
     """
@@ -38,7 +43,7 @@ def reactor(c,t,k,S):
         outputs: 
             dc/dt - numpy array
     """
-    return ... # please complete this function
+    return S @ reaction_rates(c,k)# please complete this function
 
 # Please play around with the step size to study the effect on the solution
 h = 1e-3
@@ -50,6 +55,10 @@ h = 1e-3
 # time horizon
 tspan = (0.0,5.0)
 
+c_0 = np.array([1.0,0,0]);
+k = np.array([100,0.25,1]);
+S = np.array([[-1,0,0], [1,-1,1], [0,2,-2]])
+V_ = np.array([[1,0,0], [0,1,0], [0,0,2]])
 
 # define dormant_prince_stepper
 def dormant_prince_stepper(f,x,t,h):
