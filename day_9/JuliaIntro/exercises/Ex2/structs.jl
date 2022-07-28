@@ -24,10 +24,14 @@ z_julia = x_julia * y_julia
 # Implement function my_add that adds
 # two objects of type MyComplex and returns the result as such
 
-
+function my_adds(a::MyComplex, b::MyComplex)
+    return MyComplex(a.Re+b.Re, a.Im+b.Re)
+end
 # create a method for Julia's + function to work on your type here
 
-
+function +(a::MyComplex, b::MyComplex)
+    return my_add(a,b)
+end
 # run the following lines to test your implementation
 # z = x + y
 # sum([x,y])
