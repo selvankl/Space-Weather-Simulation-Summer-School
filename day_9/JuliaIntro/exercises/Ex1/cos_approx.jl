@@ -1,6 +1,12 @@
 using BenchmarkTools
 
 function cos_approx(x, N)
+    a= 0
+    for j in 0:N
+        V=(((-1)^j) /(factorial(big(2*j))) ) * (x^(2j))
+        a += V
+    end
+    return a
     # approximation of cosine via power series expansion
     # inputs:
     #       - x : argument of cosine 
