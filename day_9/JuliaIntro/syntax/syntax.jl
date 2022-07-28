@@ -13,7 +13,7 @@ exp(🔥)
 phi = (sqrt(5) + 1)/2 
 
 # Navier stokes 
-NS = ρ * (∂u + (u ⋅ ∇*u)) + 𝒫
+#NS = ρ * (∂u + (u ⋅ ∇*u)) + 𝒫
 
 # other useful things 
 a = π
@@ -26,6 +26,12 @@ unit_disc_area = 2*a
 # defining a vector
 powers_of_two = [1, 2, 4]
 some_random_stuff = ["flemming", 43.5]
+
+######
+for i in 1:2:10
+    println(i)
+end
+####
 
 # appending stuff: push!, append!
 push!(powers_of_two, 8)
@@ -70,11 +76,11 @@ for i in eachindex(powers_of_two)
     println(powers_of_two[i])
 end
 
-i = 0
-while i <= 10
-    println(i)
-    i += 1
-end
+#i = 0
+#while i <= 10
+##    println(i)
+# #   i += 1
+#end
 
 #in particular ranges are written with : instead of range function
 #range(5) <=> 0:4 
@@ -105,6 +111,10 @@ function my_add(a, b)
     # return a + b
 end
 
+f(x) = 1/2*x
+
+println(f(10))
+
 Σ = my_add(5, 3)
 
 # for simple functions we may prefer the assignment form 
@@ -112,6 +122,12 @@ end
 f(x) = 1/(2π)*exp(-x^2)
 # evaluation 
 p = f(0.5)
+
+function f(x)
+    return x^10
+end
+println(f(10))
+
 
 # vectorization/(map-reduce)
 # evaluates our function at every element of the supplied 
