@@ -36,7 +36,7 @@ Dx = 1/N
 x = np.linspace(0,1,N+1)
 
 "Time parameters"
-dt = 0.1
+dt = 1/50
 time = np.arange(0,3+dt,dt)
 nt = np.size(time)
 
@@ -105,6 +105,7 @@ ax = plt.axes(xlim =(0, 1),ylim =(0,1/c))
 plt.plot(x,ua,'-r',linewidth=2,label='$u_a$')
 myAnimation, = ax.plot([], [],':ob',linewidth=2)
 plt.grid()
+plt.pause(0.15)
 plt.xlabel("x",fontsize=16)
 plt.ylabel("u",fontsize=16)
 
